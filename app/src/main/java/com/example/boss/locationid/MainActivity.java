@@ -9,7 +9,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -19,6 +25,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
+
+import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -49,6 +57,20 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.activity_main_lv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i < 100; i++){
+            arrayList.add("Item " + i);
+        }
+
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);*/
+
+        MyRecycleAdapter adapter = new MyRecycleAdapter(arrayList);
+        recyclerView.setAdapter(adapter);
+        /*recyclerView.setItemAnimator(new DefaultItemAnimator());*/
+        /*startActivity(new Intent(this, MapsActivity.class));*/
 
 
     }
